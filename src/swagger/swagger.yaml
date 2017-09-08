@@ -1,0 +1,112 @@
+swagger: '2.0'
+info:
+  description: Digest restful API
+  version: 1.0.0
+  title: Digest restful API
+host: '0.0.0.0:8000'
+basePath: /api
+schemes:
+  - http
+produces:
+  - application/json
+paths:
+  /categories:
+    get:
+      summary: Returns categories list
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Array of categories
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Category'
+  /news:
+    get:
+      summary: Returns news list with pagination
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Array of news
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/News'
+  /news/filter:
+    post:
+      summary: Returns filtered news list with pagination
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: params
+          in: body
+          description: News filtering params
+          required: true
+          schema:
+            $ref: '#/definitions/FilterParams'
+      responses:
+        '200':
+          description: Array of filtered news
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/News'
+definitions:
+  FilterParams:
+    description: News filter params
+    properties:
+      from:
+        type: integer
+        description: Start date in Unix timestamp format
+        example: 1410715640579
+      to:
+        type: integer
+        description: End date in Unix timestamp format
+        example: 1410715990579
+      categories:
+        type: array
+        description: Categories ids for filtering
+        items:
+          $ref: '#/definitions/Category'
+        example: [171, 192]
+  News:
+    description: News object
+    properties:
+      title:
+        type: string
+        description: Title
+        example: Short news title
+      category:
+        type: integer
+        description: Category id
+        example: 171
+      description:
+        type: string
+        description: Short news description
+        example: Some event taking place in Russia
+      date:
+        type: string
+        description: Date in ISO 8601 format string
+        example: '2017-08-24T10:54:18.209Z'
+    required:
+      - title
+      - category
+      - description
+      - date
+  Category:
+    properties:
+      id:
+        type: integer
+        example: 171
+      name:
+        type: string
+        example: Politics
+    required:
+      - id
+      - name

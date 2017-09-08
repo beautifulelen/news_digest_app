@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mail digest</title>
+</head>
+<body>
+{% if data %}
+    <div>
+        {% for news in data %}
+            <div>
+                <h2>
+                    {{ news.name }}
+                </h2>
+                <div>
+                    <div>Дата: {{ news.date|date:"d F Y H:i" }}</div>
+                    <div>Категория: {{ news.category.name}}</div>
+                </div>
+                <div>
+                    {{ news.description }}
+                </div>
+            </div>
+            <div>
+                <a href="{{ news.link }}">Подробнее...</a></div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div>No news are available.</div>
+{% endif %}
+</body>
+</html>
