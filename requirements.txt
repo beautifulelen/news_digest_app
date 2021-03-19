@@ -1,6 +1,6 @@
 Django==1.11.4
 celery==4.1.0
-djangorestframework==3.6.3
+djangorestframework==3.11.2
 psycopg2==2.7.3
 redis==2.10.6
 beautifulsoup4==4.6.0
